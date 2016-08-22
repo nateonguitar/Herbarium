@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "ViewImage";
+}
+
+<style type="text/css">
+    #image{
+        width:100%;
+    }
+    #backButton{
+        margin:15px;
+        padding:10px 15px;
+        font-size:115%;
+    }
+</style>
+
+<form><input Type="button" id="backButton" value="Back" class="button" onclick="history.go(-1);return true;"></form>
+
+<img id="image" src="@Url.Content("~/Images/" + ViewBag.ImageName)" />

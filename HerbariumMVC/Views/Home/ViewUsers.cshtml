@@ -1,0 +1,11 @@
+﻿@model List<HerbariumMVC.Models.User>
+
+
+<h2>Herbarium Users</h2>
+@foreach (var user in Model)
+{
+    <p>
+        @user.userName (@user.fName @user.lName)
+        @Html.ActionLink("edit", "edit", "home", new { id = @user.userName }, null)
+    </p>
+}

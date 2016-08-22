@@ -1,0 +1,17 @@
+﻿@model HerbariumMVC.Models.User
+
+<h2>Edit User @Html.DisplayFor(model => model.userName)</h2>
+
+<p>When this form loads it shows how the users are set.  If "Admin" is not checked, this person is not an admin.</p>
+<p>To reset a user's password just check the "Reset Password" and click "Save"</p>
+<form method="post">
+<p> @Html.HiddenFor(model => model.userName)</p>
+<p>
+    First Name: @Html.EditorFor(model => model.fName) <br />
+    Last Name: @Html.EditorFor(model => model.lName) <br />
+    Admin: @Html.EditorFor(model => model.admin) <br />
+    Reset Password: @Html.CheckBox("resetPassword")
+</p>
+    <input type="submit" value="Save" />  
+    @Html.ActionLink("Cancel","Index","Home",null,"button")
+</form>

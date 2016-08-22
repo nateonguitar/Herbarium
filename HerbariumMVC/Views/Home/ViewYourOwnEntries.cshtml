@@ -1,0 +1,300 @@
+﻿@model IEnumerable<HerbariumMVC.Models.SearchResultViewModel>
+@{
+    ViewBag.Title = "ViewYourOwnEntries";
+
+    var loggedInTest = Session["loggedIn"];
+
+    bool loggedIn;
+
+    if (loggedInTest == null)
+    {
+        loggedIn = false;
+    }
+    else
+    {
+        loggedIn = true;
+    }
+}
+
+<h2>View Your Own Entries</h2>
+
+<script type="text/javascript">
+    @* convert loggedIn from razor to javascript *@
+    var loggedin = @loggedIn.ToString().ToLower();
+</script>
+
+<style type="text/css">
+    #searchResultsTable {
+        border-collapse: collapse;
+    }
+
+        #searchResultsTable th {
+            background-color: #333;
+            color: white;
+            padding: 5px;
+            margin: 0;
+        }
+
+        #searchResultsTable td {
+            border: 1px solid #333;
+            background-color: #ddd;
+            color: black;
+            padding: 5px;
+            margin: 0;
+        }
+
+    #popUpInfoWindowBacking {
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        z-index: 105;
+        position: fixed;
+        margin: auto;
+        top: 0;
+        left: 0;
+        text-align: center;
+        display: none;
+    }
+
+    #popUpInfoWindow {
+        position: fixed;
+        width:50%;
+        min-width: 250px;
+        background-color: #330066;
+        z-index: 110;
+        border-radius: 7px;
+        color: white;
+        padding: 15px 30px;
+        text-align: left;
+        top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+        display: none;
+        max-height:80%;
+        overflow-y:scroll;
+    }
+    
+            #popUpInfoWindow img{
+                width:100%;
+            }
+
+    #searchResultsTable {
+        margin-right: auto;
+        margin-left: auto;
+        position: relative;
+    }
+
+    .italic {
+        font-style: italic;
+    }
+
+    .nowrap {
+        white-space: nowrap;
+    }
+</style>
+
+<table id="searchResultsTable">
+    <tr>
+
+        <th> Genus </th>
+        <th> Species </th>
+        <th> SubSpecies </th>
+        <th> CollectedDate </th>
+        <th> Elevation </th>
+        <th> County </th>
+        <th> State </th>
+        <th> Community </th>
+        <th> </th>
+
+
+    </tr>
+    @{
+        foreach (var item in Model.ToList())
+        {
+            <tr>
+                <td> @item.Genus </td>
+                <td> @item.Species </td>
+                <td> @item.SubSpecies </td>
+                <td> @String.Format("{0:M/d/yyyy}", @item.CollectedDate) </td>
+                <td> @item.Elevation </td>
+                <td> @item.County </td>
+                <td> @item.State </td>
+                <td> @item.Community </td>
+                <td> <input type="button" value="More Info" onclick='showMoreInfo("@item.SpecimenGUID")' /></td>
+            </tr>
+        }
+    }
+</table>
+
+
+
+<div id="popUpInfoWindowBacking" onclick="hideMoreInfo()">
+
+</div>
+
+<div id="popUpInfoWindow">
+
+</div>
+
+
+<script type="text/javascript">
+    var entries = {
+        list : [
+            @foreach (var item in Model.ToList())
+            {
+                    @:{
+                                                            @:SpecimenGUID     : "@item.SpecimenGUID",
+                                                            @:Genus            : "@item.Genus",
+                                                            @:Species          : "@item.Species",
+                                                            @:SubSpecies       : "@item.SubSpecies",
+                                                            @:CollectedDate    : "@String.Format("{0:M/d/yyyy}", @item.CollectedDate)",
+                                                            @:Elevation        : "@item.Elevation",
+                                                            @:County           : "@item.County",
+                                                            @:State            : "@item.State",
+                                                            @:Community        : "@item.Community",
+                                                            @:AcquisitionNo    : "@item.AcquisitionNo",
+                                                            @:Family           : "@item.Family",
+                                                            @:EthnobotanicalUse: "@item.EthnobotanicalUse",
+                                                            @:CollectorNo      : "@item.CollectorNo",
+                                                            @:Notes            : "@item.Notes",
+                                                            @:CollectorName    : "@item.CollectorName",
+                                                            @:Deleted          : "@item.Deleted",
+                                                            @:UserName         : "@item.UserName",
+                                                            @:Lat              : "@item.Lat",
+                                                            @:Lng              : "@item.Lng",
+                                                            @:Country          : "@item.Country",
+                                                            @:LocationDesc     : "@item.LocationDesc",
+                                                            @:Township         : "@item.Township",
+                                                            @:Sect             : "@item.Sect",
+                                                            @:Range            : "@item.Range",
+                                                            @:Author           : "@item.Author",
+                                                            @:SubAuthor        : "@item.SubAuthor",
+                                                            @:SoilType         : "@item.SoilType",
+                                                            @:SoilColor        : "@item.SoilColor",
+                                                            @:SoilMoisture     : "@item.SoilMoisture",
+                                                            @:LocationGUID     : "@item.LocationGUID",
+                                                            @:AIKey            : "@item.AIKey",
+                                                            @:ImageName        : "../../Images/@item.ImageName",
+                                                            @:ImageNameAlt     : "@item.ImageName",
+                                                            @:IIKey            : "@item.IIKey"
+
+                    @:},
+                            }
+        ]
+    };
+
+    function hideMoreInfo() {
+        $("#popUpInfoWindowBacking").hide();
+        $("#popUpInfoWindow").hide();
+        $("html,body").css({ "overflow-y": "initial" });
+        $("#popUpInfoWindowBacking").css({ "overflow": "initial" });
+    }
+
+    function showMoreInfo(SpecimenGUID) {
+        // find the matching SpecimenGUID
+        for (var i = 0; i < entries.list.length; i++)
+        {
+            if(entries.list[i].SpecimenGUID == SpecimenGUID)
+            {
+                var entry = entries.list[i];
+                // now that we found the array entry with the same SpecimenGUID
+                // lets populate the pop up info window
+                $("#popUpInfoWindow").html(
+                    "<div style='float:right; font-size:250%; cursor:pointer;' onclick='hideMoreInfo();'>&times;</div><h2>Specimen Information</h2>" 
+                    + "<p class='italic'>" + entry.Family + " " + entry.Genus + " " + entry.Species + " <br />" + entry.SubSpecies + "</p>"
+                    + "<p>" + entry.County + " " + entry.State + " " + entry.Country + " " + entry.Township + "</p>");
+
+                if(entry.LocationDesc != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p><span class='bold'>LocationDesc:</span> " + entry.LocationDesc + "</p>" );
+                }
+
+
+
+
+                // if there is any geo-location data to show
+                if(entry.Lat != "" || entry.Lng != "" || entry.Elevation != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p><span class='bold'>GPS:</span> " + entry.Lat + ", " + entry.Lng  + ", <span class='nowrap'>Elev: " + entry.Elevation + " ft.</span></p>");
+                }
+
+
+                $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p>" );
+                if(entry.Community != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + entry.Community + " - " );
+                }
+                else
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<span class='bold'>Soil:</span> " );
+                }
+
+
+                if(entry.SoilColor != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + entry.SoilColor + ", " );
+                }
+
+                if(entry.SoilType != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + entry.SoilType + ", " );
+                }
+
+                if(entry.SoilMoisture != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + entry.SoilMoisture + ", " );
+                }
+                $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "</p>");
+
+
+                $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p>" );
+                if(entry.Author != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<span class='nowrap'><span class='bold'>Author:</span> " + entry.Author + "</span>" );
+                }
+
+                if(entry.SubAuthor != "")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<br /><span class='nowrap'><span class='bold'>Sub-Author:</span> " + entry.SubAuthor + "</span>" );
+                }
+                $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "</p>");
+
+
+
+                $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p><span class='bold'>CollectorName:</span> " + entry.CollectorName + " " + entry.CollectorNo + "<br /><span class='bold'>Collected Date:</span> " + entry.CollectedDate + "</p>" );
+
+                if(entry.EthnobotanicalUse != "" || entry.EthnobotanicalUse != " ")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p><span class='bold'>Ethnobotanical Use:</span> " + entry.EthnobotanicalUse + "</p>" );
+                }
+
+                if(entry.Notes != "" || entry.Notes != " ")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p><span class='bold'>Notes:</span> " + entry.Notes + "</p>" );
+                }
+
+                if(entry.AcquisitionNo != "" || entry.AcquisitionNo != " ")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<p><span class='bold'>AcquisitionNo:</span> " + entry.AcquisitionNo + "</p>" );
+                }
+                if(entry.ImageName != "" && entry.ImageName != " " && entry.ImageNameAlt != "" && entry.ImageNameAlt != " ")
+                {
+                    $("#popUpInfoWindow").html( $("#popUpInfoWindow").html() + "<a href='/Home/ViewImage?ImageName=" + entry.ImageNameAlt + "'><img src='" + entry.ImageName + "' /></a>" );
+                }
+
+
+
+
+                if(loggedin == true){
+                    $("#popUpInfoWindow").html($("#popUpInfoWindow").html() + "<p><a href='/Home/EditASpecimen?SpecimenGUID=" + entry.SpecimenGUID + "&LocationGUID=" + entry.LocationGUID + "&AIKey=" + entry.AIKey + "'><input type='button' value='Edit' /></a></p>");
+                }
+
+                // and make it show up
+                $("#popUpInfoWindowBacking").fadeIn(200);
+                $("#popUpInfoWindow").fadeIn(200);
+                $("html,body").css({ "overflow-y": "hidden" });
+                $("#popUpInfoWindowBacking").css({ "overflow-y": "scroll" });
+            }
+        }
+    }
+</script>

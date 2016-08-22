@@ -1,0 +1,222 @@
+﻿@model HerbariumMVC.Models.NewDatabaseSpecimenEntry
+@{
+    ViewBag.Title = "NewDatabaseEntry";
+}
+
+<h2>New Database Specimen Entry</h2>
+
+
+@using (Html.BeginForm("NewDatabaseEntry", "Home", FormMethod.Post, new { id = "NewDatabaseEntryForm", enctype = "multipart/form-data" }))
+{
+    <input  type="hidden" value="@Session["username"]" name="Username" />
+    <table class="entryContainerBox">
+        <tr>
+            <td>CollectedDate:</td>
+            <td>@Html.EditorFor(model => model.CollectedDate, new { id = "CollectedDate" })</td>
+        </tr>
+
+        <tr>
+            <td>CollectorName:</td>
+            <td>@Html.EditorFor(model => model.CollectorName, new { id = "CollectorName" })</td>
+        </tr>
+            
+        
+
+        <tr>
+            <td>County:</td>
+            <td>@Html.EditorFor(model => model.County, new { id = "County" })</td>
+        </tr>
+
+        <tr>
+            <td>State:</td>
+            <td>@Html.EditorFor(model => model.State, new { id = "State" })</td>
+        </tr>
+
+        <tr>
+            <td>Country:</td>
+            <td>@Html.EditorFor(model => model.Country, new { id = "Country" })</td>
+        </tr>
+
+        <tr>
+            <td>LocationDesc:</td>
+            <td>@Html.TextAreaFor(model => model.LocationDesc, new { id = "LocationDesc" })</td>
+        </tr>
+            
+        <tr>
+            <td>Lat:</td>
+            <td>@Html.EditorFor(model => model.Lat, new { id = "Lat", step = 0.000001 })</td>
+        </tr>
+
+        <tr>
+            <td>Long:</td>
+            <td>@Html.EditorFor(model => model.Lng, new { id = "Lng", step = 0.000001 })</td>
+        </tr>
+
+        <tr>
+            <td>Elevation:</td>
+            <td>@Html.EditorFor(model => model.Elevation, new { id = "Elevation", step = "0.000001" })</td>
+        </tr>
+
+        <tr>
+            <td>SoilColor:</td>
+            <td>
+                <select name="SoilColor" id="SoilColor">
+                    <option value="red">Red</option>
+                    <option value="light brown">Light Brown</option>
+                    <option value="brown">Brown</option>
+                    <option value="dark brown">Dark Brown</option>
+                    <option value="grey">Grey</option>
+                    <option value="green">Green</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>SoilType:</td>
+            <td>
+                <select name="SoilType" id="SoilType">
+                    <option value="clay">Clay</option>
+                    <option value="loam">Loam</option>
+                    <option value="sandy">Sandy</option>
+                    <option value="rocky">Rocky</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>SoilMoisture:</td>
+            <td>
+                <select name="SoilMoisture" id="SoilMoisture">
+                    <option value="wet">Wet</option>
+                    <option value="dry">Dry</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Community:</td>
+            <td>@Html.EditorFor(model => model.Community, new { id = "Community" })</td>
+        </tr>
+    </table>
+
+
+
+
+
+
+
+
+
+
+    <table id="tableToWipeOnLoad" class="entryContainerBox">
+        
+
+        <tr>
+            <td>AcquisitionNo:</td>
+            <td>@Html.EditorFor(model => model.AcquisitionNo, new { id = "AcquisitionNo" })</td>
+        </tr>
+        <tr>
+            <td>Ethnobotanical Use:</td>
+            <td>@Html.EditorFor(model => model.EthnobotanicalUse, new { id = "EthnobotanicalUse" })</td>
+        </tr>
+        <tr>
+            <td>Notes:</td>
+            <td>@Html.EditorFor(model => model.Notes, new { id = "Notes" })</td>
+        </tr>
+        <tr>
+            <td>Family:</td>
+            <td>@Html.EditorFor(model => model.Family, new { id = "Family" })</td>
+        </tr>
+        <tr>
+            <td>Genus:</td>
+            <td>@Html.EditorFor(model => model.Genus, new { id = "Genus" })</td>
+        </tr>
+        <tr>
+            <td>Species:</td>
+            <td>@Html.EditorFor(model => model.Species, new { id = "Species" })</td>
+        </tr>
+        <tr>
+            <td>SubSpecies:</td>
+            <td>@Html.EditorFor(model => model.SubSpecies, new { id = "SubSpecies" })</td>
+        </tr>
+        <tr>
+            <td>Author:</td>
+            <td>@Html.EditorFor(model => model.Author, new { id = "Author" })</td>
+        </tr>
+        <tr>
+            <td>SubAuthor:</td>
+            <td>@Html.EditorFor(model => model.SubAuthor, new { id = "SubAuthor" })</td>
+        </tr>
+
+        <tr>
+            <td>CollectorNo:</td>
+            <td>@Html.EditorFor(model => model.CollectorNo, new { id = "CollectorNo" })</td>
+        </tr>
+        <tr>
+            <!-- Image -->
+            <td colspan="2">Upload an image: <input type="file" name="Image" style="background-color:white; width:180px; color:black;" /></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="button" style="padding:20px; font-size:150%; font-weight:bold; margin-top:10px; margin-bottom:10px;" value="Get Geo-Location" id="getGeoLocationSubmitButton" /></td>
+        </tr>
+        
+    </table>
+    <div style="clear:both;"></div>
+
+
+
+    <div style="clear:both;"></div>
+        
+    <ul style="text-align:left;">
+        <li>
+            <style type="text/css">
+                #numberOfLabels {
+                    width: 40px;
+                    padding:5px;
+                    margin-bottom:5px;
+                }
+            </style>
+            Number of Labels: @Html.TextBoxFor(model => model.numberOfLabels, new { type = "number", @Value = 1, min = 1 })<br />
+            <input class="saveButton" type="submit" value="Save and Print Labels" name="Save" /><br />
+            <input class="saveButton" type="submit" value="Just Print Labels" name="Save" />
+        </li>
+        <li>
+            <input class="saveButton" type="submit" value="Save Only - No Printing" name="Save" />
+        </li>
+        <li>
+            <input class="saveButton" type="submit" value="Cancel" name="Save" />
+        </li>
+    </ul>
+    
+}
+
+<div style="clear:both;"></div>
+
+<div id="map" style="width:90%; height:400px; margin: 5% 5% 5% -300%;"></div>
+
+
+    
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDN9vUmgpzsT53Cz9cN18qhPTcq8ow2Hnk&callback=initMap">
+    // this script lets the geocoder and the elevator work
+</script>
+
+<script type="text/javascript">
+
+    function clearFieldsForNextEntry() {
+        $("#AcquisitionNo").val("");
+        $("#EthnobotanicalUse").val("");
+        $("#Notes").val("");
+        $("#Family").val("");
+        $("#Genus").val("");
+        $("#Species").val("");
+        $("#SubSpecies").val("");
+        $("#Author").val("");
+        $("#SubAuthor").val("");
+        $("#CollectorNo").val("");
+        return true;
+    }
+    // clear off the fields from the previous
+    clearFieldsForNextEntry();
+    console.log(clearFieldsForNextEntry());
+</script>

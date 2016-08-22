@@ -1,0 +1,34 @@
+﻿@model HerbariumMVC.Models.User
+
+@{
+    ViewBag.Title = "New User";
+}
+
+<script src="~/Scripts/validateNewUser.js"></script>
+
+<h2>Add a New User</h2>
+
+@using (Html.BeginForm("NewUser", "Home", FormMethod.Post, new { onsubmit = "return validateNewUser(this);", id="NewUserForm" })) { 
+    <p>
+        <!-- password is not captured here on purpose, that will be done when the user logs in the first time -->
+        <ul style="width:100px; text-align:right;">
+            <li>Username:</li>
+            <li>First Name:</li>
+            <li>Last Name:</li>
+        </ul>
+        <ul style="width:200px; float:left">
+            <li>@Html.EditorFor(model => model.userName)</li>
+            <li>@Html.EditorFor(model => model.fName)</li>
+            <li>@Html.EditorFor(model => model.lName)</li>
+            
+            <li>@Html.CheckBoxFor(model => model.admin) Admin</li>
+        </ul>
+    </p>
+    <div style="clear:both;"></div>
+    <input type="submit" value="Save" id="Save" />
+    @Html.ActionLink("Cancel", "Index", "Home", null, "button")
+}
+
+<div id="errors" class="error">
+
+</div>

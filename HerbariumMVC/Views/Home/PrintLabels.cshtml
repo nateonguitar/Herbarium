@@ -1,0 +1,100 @@
+﻿@model HerbariumMVC.Models.NewDatabaseSpecimenEntry
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrintLabels</title>
+    <style>
+        @@media print
+        {
+            * {-webkit-print-color-adjust:exact;}
+        }
+
+        body {
+            width: 8.5in;
+            margin: 0in .1875in;
+            color:black;
+            font-size:11pt;
+            font-family:'Times New Roman';
+        }
+
+            
+
+        .label {
+            /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
+
+            width: 3.5in;/* plus .6 inches from padding */
+            height: 2.4in;/* plus .125 inches from padding */
+            padding: .15in .3in 0;
+            margin:0.025in 0.03in;
+            float: left;
+            text-align: left;
+            overflow: hidden;
+            background:url("~/../../Content/themes/print-border.png");
+            background-size:100% 100%;
+        }
+
+            .labelHeader{
+                font-size:16pt;
+                text-align:center;
+                margin-top:0.05in;
+                margin-bottom:0.05in;
+            }
+
+            .italic{
+                font-style:italic;
+                line-height: 0.35in;
+            }
+
+        .page-break {
+            clear: left;
+            display: block;
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+    @{
+
+        int times = Model.numberOfLabels;
+        for (int i = 0; i < times; i++)
+        {
+            if (i % times == 0)
+            {
+                <div class="page-break"></div>
+            }
+
+            <div class="label">
+                <p class="labelHeader">Herbarium of Weber State University</p>
+
+                <span class="italic">@Html.DisplayFor(model => model.Genus) @Html.DisplayFor(model => model.Species) <br />@Html.DisplayFor(model => model.SubSpecies)</span><br />
+                
+                @Html.DisplayFor(model => model.County) Co., @Html.DisplayFor(model => model.State) @Html.DisplayFor(model => model.Township)<br />
+                
+                @Html.DisplayFor(model => model.LocationDesc)<br />
+
+                <span style="white-space:nowrap;">GPS: @Html.DisplayFor(model => model.Lat), @Html.DisplayFor(model => model.Lng), Elev: @Html.DisplayFor(model => model.Elevation) ft.</span><br />
+
+                @Html.DisplayFor(model => model.Community) - Soil: @Html.DisplayFor(model => model.SoilColor), @Html.DisplayFor(model => model.SoilType), @Html.DisplayFor(model => model.SoilMoisture)<br />
+
+                <span style="margin-right:0.1in">@Html.DisplayFor(model => model.CollectorName)  @Html.DisplayFor(model => model.CollectorNo)</span>  @Html.DisplayFor(model => model.CollectedDate)
+                
+                
+
+                
+
+                
+                
+
+            </div>
+            
+        }
+    }
+    
+</body>
+</html>

@@ -1,0 +1,23 @@
+﻿@model HerbariumMVC.Models.ChangeOwnInfoViewModel
+@{
+    ViewBag.Title = "ChangeOwnInfo";
+}
+
+<h2>Change Your Info</h2>
+
+@using (Html.BeginForm("ChangeOwnInfo", "Home", FormMethod.Post))
+{
+    <p>@Html.ActionLink("Change Your Password", "SetPassword", "Home")</p>
+    <ul style="width:175px; text-align:right; float:left;">
+        <li>First Name:</li>
+        <li>Last Name:</li>
+    </ul>
+
+    <ul style="float:left;">
+        <li>@Html.EditorFor(model => model.fName)</li>
+        <li>@Html.EditorFor(model => model.lName)</li>
+        <input type="submit" value="Submit" />
+        <li><input type="hidden" name="username" value="@ViewBag.username" /></li>
+    </ul>
+    <input type="submit" value="Save Changes" />
+}

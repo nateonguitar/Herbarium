@@ -1,0 +1,180 @@
+﻿@{
+    // this is to check if the session data is set yet
+    // cannot directly check if Session["admin"] == null
+
+    var adminTest = Session["admin"];
+    var loggedInTest = Session["loggedIn"];
+    bool admin;
+    bool loggedIn;
+
+    if (adminTest == null)
+    {
+        admin = false;
+    }
+    else
+    {
+        admin = true;
+    }
+
+    if (loggedInTest == null)
+    {
+        loggedIn = false;
+    }
+    else
+    {
+        loggedIn = true;
+    }
+}
+
+
+
+<div id="topBanner">
+    <div id="title" class="bannerItem">
+        @Html.ActionLink("Herbarium", "Index", "Home")
+    </div>
+
+    <div id="topBannerSchoolInfo" class="bannerItem">
+        <a href="http://www.weber.edu/botany">
+            <h2>Weber State University</h2>
+            <h2 style="color:#6b8e23;">Botany Department</h2>
+        </a>
+
+</div>
+
+    <div id="topBannerLogInOrOut" class="bannerItem">
+        @{
+            if (loggedIn)
+            {
+                <h2>@Html.ActionLink("Logout", "Logout", "Home")</h2>
+            }
+            else
+            {
+                <h2 onclick = "showLoginForm();" style = "cursor:pointer; font-size:150%;">Log in</h2>
+            }
+        }
+    </div>
+
+    <div id="topBannerSearch" class="bannerItem">
+
+
+        @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { onsubmit = "return validateSearch(this);" }))
+        {
+            var searchTerms = Session["search"];
+            if (searchTerms != null && !Session["search"].Equals(""))
+            {
+                <span>
+                    @Html.TextBox("search", null, new { placeholder = "Search the Database", @Value = searchTerms })
+                </span>
+            }
+            else
+            {
+                <span>
+                    @Html.TextBox("search", null, new { placeholder = "Search the Database" })
+                </span>
+            }
+
+            <input type="submit" value="Search">
+            <p class="bold">Allow for duplicates: @Html.CheckBox("multipleSearch")</p>
+        }
+
+
+        @*
+            Produces the following form element
+            <form action="/Account/Login" action="post">
+        *@
+    </div>
+
+    @{
+
+        if (admin)
+        {
+            <div id="adminPanel">
+                <ul>
+                    <li><span class="adminPanelItem" style="font-weight:bold;">Admin</span></li>
+                    <li>@Html.ActionLink("View Users", "ViewUsers", "Home", null, new { @class = "panelItem" })</li>
+                    <li>@Html.ActionLink("Add a New User", "NewUser", "Home", null, new { @class = "panelItem" })</li>
+                </ul>
+            </div>
+        }
+
+        if (loggedIn)
+        {
+            <div id="loggedInPanel">
+                <ul>
+                    <li>@Html.ActionLink("New Database Entry", "NewDatabaseEntry", "Home", null, new { @class = "panelItem" })</li>
+                    <li>@Html.ActionLink("View Your Entries", "ViewYourOwnEntries", "Home", null, new { @class = "panelItem" })</li>
+                    <li><span style="cursor:pointer; display:block; padding:8px 10px;" onclick="hideHeader();" id="hideHeader">Hide Header</span></li>
+                    
+                </ul>
+            </div>
+        }
+    }
+    
+</div>
+
+
+<div id="mobileTopBanner">
+    <img src="~/Content/themes/menu-round-128.png" />
+    <a style="text-decoration:none;" href="http://www.weber.edu/botany">
+        Weber State University
+        <br /><span style="color:#6b8e23;">Botany Department</span>
+    </a>
+</div>
+
+
+<div id="mobileSideMenu">
+    <ul>
+        <li class="back mobileMenuItem">Back</li>
+
+        <li>@Html.ActionLink("Herbarium Home", "Index", "Home")</li>
+
+        @{
+            if (loggedIn)
+            {
+                <li class="mobileMenuItem" style="padding:0;">
+                    @Html.ActionLink("Logout", "Logout", "Home")
+                </li>
+            }
+            else
+            {
+                <li class="mobileMenuItem">
+                    <span onclick="showLoginForm();" style="cursor:pointer;"> Log in</span>
+                </li>
+            }
+        }
+        
+
+        @{
+            if (admin)
+            {
+
+                <li class="mobileMenuItem" style="padding:0;">@Html.ActionLink("View Users", "ViewUsers", "Home")</li>
+                <li class="mobileMenuItem" style="padding:0;">@Html.ActionLink("Add a New User", "NewUser", "Home")</li>
+            }
+
+            if (loggedIn)
+            {
+                <li class="mobileMenuItem" style="padding:0;">@Html.ActionLink("New Database Entry", "NewDatabaseEntry", "Home")</li>
+                <li class="mobileMenuItem" style="padding:0;">@Html.ActionLink("View Your Entries", "ViewYourOwnEntries", "Home")</li>
+            } 
+        }
+
+        <li class="mobileMenuItem" id="mobileMenuSearchButton">
+            Search <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </li>
+
+
+
+        <li class="mobileMenuItem" id="mobileSearchBar">
+            @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { onsubmit = "return validateSearch(this);" }))
+            {
+                <p class="bold small">Allow for duplicates: @Html.CheckBox("multipleSearch")</p>
+                @Html.TextBox("search", null, new { placeholder = "Search the Database" });
+                <input type="submit" value="Search">
+                
+            }
+        </li>
+
+        
+    </ul>
+</div>

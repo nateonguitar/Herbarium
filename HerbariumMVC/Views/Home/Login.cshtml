@@ -1,0 +1,27 @@
+﻿@* this is a partial view *@
+
+<div id="loginFormWholePageContainer">
+    <div id="loginFormBacking" onclick="hideLoginForm()"></div>
+    <div id="loginForm">
+        <h2 class="bold">Log in</h2>
+        <ul class="labelUL">
+            <li>Username:&nbsp;</li>
+            <li>Password:&nbsp;</li>
+        </ul>
+        <ul style="width:200px;">
+            @using (Html.BeginForm("LoginForm", "Home"))
+            {
+                <li>
+                    @Html.TextBox("userName")
+                </li>
+                    <li>
+                        @Html.Password("password")
+                    </li>
+                    <li>
+                        <input class="button" type="submit" value="Login" /><input type="button" class="button" value="Cancel" onclick="hideLoginForm()" />
+                    </li>
+            }
+        </ul>
+        <div style="clear:both;"></div>
+    </div>
+</div>
