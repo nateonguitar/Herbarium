@@ -236,7 +236,50 @@ namespace HerbariumMVC.Controllers
 
         }
 
+        public ActionResult PrintFromSearch(string specimenGUID, string locationGUID, int aikey, int numberOfLabels)
+        {
+            List<SearchResultViewModel> results = da.getSingleSpecimen(specimenGUID, locationGUID, aikey);
+            SearchResultViewModel entryToConvert = results.First();
 
+            NewDatabaseSpecimenEntry entry = new NewDatabaseSpecimenEntry();
+            entry.AcquisitionNo     = entryToConvert.AcquisitionNo    ;
+            entry.EthnobotanicalUse = entryToConvert.EthnobotanicalUse;
+            entry.CollectedDate     = entryToConvert.CollectedDate    ; 
+            entry.CollectorNo       = entryToConvert.CollectorNo      ; 
+            entry.Notes             = entryToConvert.Notes            ; 
+            entry.CollectorName     = entryToConvert.CollectorName    ; 
+            entry.Deleted           = entryToConvert.Deleted          ; 
+            entry.AIKey             = entryToConvert.AIKey            ; 
+            entry.UserName          = entryToConvert.UserName         ; 
+            entry.LocationGUID      = entryToConvert.LocationGUID     ; 
+            entry.Lat               = entryToConvert.Lat              ; 
+            entry.Lng               = entryToConvert.Lng              ; 
+            entry.Elevation         = entryToConvert.Elevation        ; 
+            entry.Country           = entryToConvert.Country          ; 
+            entry.County            = entryToConvert.County           ; 
+            entry.State             = entryToConvert.State            ; 
+            entry.LocationDesc      = entryToConvert.LocationDesc     ; 
+            entry.LIKey             = entryToConvert.LIKey            ; 
+            entry.Township          = entryToConvert.Township         ; 
+            entry.Sect              = entryToConvert.Sect             ; 
+            entry.Range             = entryToConvert.Range            ; 
+            entry.SpecimenGUID      = entryToConvert.SpecimenGUID     ; 
+            entry.Family            = entryToConvert.Family           ; 
+            entry.Genus             = entryToConvert.Genus            ; 
+            entry.Species           = entryToConvert.Species          ; 
+            entry.SubSpecies        = entryToConvert.SubSpecies       ; 
+            entry.Author            = entryToConvert.Author           ; 
+            entry.SubAuthor         = entryToConvert.SubAuthor        ; 
+            entry.Community         = entryToConvert.Community        ; 
+            entry.SoilType          = entryToConvert.SoilType         ; 
+            entry.SoilColor         = entryToConvert.SoilColor        ; 
+            entry.SoilMoisture      = entryToConvert.SoilMoisture     ; 
+            entry.SIKey             = entryToConvert.SIKey            ;
+            entry.Image             = entryToConvert.Image            ;
+            entry.numberOfLabels = numberOfLabels;
+
+            return RedirectToAction("PrintLabels", entry);
+        }
         [HttpGet]
         public ActionResult EditASpecimen(string SpecimenGUID, string LocationGUID, string AIKey)
         {

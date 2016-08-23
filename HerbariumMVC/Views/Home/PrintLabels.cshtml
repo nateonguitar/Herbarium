@@ -21,6 +21,7 @@
             color:black;
             font-size:11pt;
             font-family:'Times New Roman';
+            line-height:0.15in;
         }
 
             
@@ -48,7 +49,6 @@
 
             .italic{
                 font-style:italic;
-                line-height: 0.35in;
             }
 
         .page-break {
@@ -72,7 +72,7 @@
             <div class="label">
                 <p class="labelHeader">Herbarium of Weber State University</p>
 
-                <span class="italic">@Html.DisplayFor(model => model.Genus) @Html.DisplayFor(model => model.Species) <br />@Html.DisplayFor(model => model.SubSpecies)</span><br />
+                <p><span class="italic" style="line-height:0.05in;">@Html.DisplayFor(model => model.Genus) @Html.DisplayFor(model => model.Species)</span> @Html.DisplayFor(model => model.Author)<br />&nbsp;&nbsp;&nbsp;<span class="italic">@Html.DisplayFor(model => model.SubSpecies)</span> @Html.DisplayFor(model => model.SubAuthor)</p>
                 
                 @Html.DisplayFor(model => model.County) Co., @Html.DisplayFor(model => model.State) @Html.DisplayFor(model => model.Township)<br />
                 
@@ -82,7 +82,7 @@
 
                 @Html.DisplayFor(model => model.Community) - Soil: @Html.DisplayFor(model => model.SoilColor), @Html.DisplayFor(model => model.SoilType), @Html.DisplayFor(model => model.SoilMoisture)<br />
 
-                <span style="margin-right:0.1in">@Html.DisplayFor(model => model.CollectorName)  @Html.DisplayFor(model => model.CollectorNo)</span>  @Html.DisplayFor(model => model.CollectedDate)
+                <p><span style="margin-right:0.1in">@Html.DisplayFor(model => model.CollectorName)  @Html.DisplayFor(model => model.CollectorNo)</span>  @Html.DisplayFor(model => model.CollectedDate)</p>
                 
                 
 

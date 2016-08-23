@@ -291,6 +291,15 @@
 
                 if(loggedin == true){
                     $("#popUpInfoWindow").html($("#popUpInfoWindow").html() + "<p><a href='/Home/EditASpecimen?SpecimenGUID=" + entry.SpecimenGUID + "&LocationGUID=" + entry.LocationGUID + "&AIKey=" + entry.AIKey + "'><input type='button' value='Edit' /></a></p>");
+
+                    $("#popUpInfoWindow").html($("#popUpInfoWindow").html() 
+                        + "<form action='/Home/PrintFromSearch' method='post'>"
+                        + "<input type='hidden' name='specimenGUID' value='" + entry.SpecimenGUID + "' />"
+                        + "<input type='hidden' name='locationGUID' value='" + entry.LocationGUID + "' />"
+                        + "<input type='hidden' name='aikey' value='" + entry.AIKey + "' />"
+                        + "Number of labels to print: <input type='number' min='1' step='1' name='numberOfLabels' />"
+                        + "<input type='submit' value='Print Labels' />"
+                        + "</form>");
                 }
 
                 // and make it show up

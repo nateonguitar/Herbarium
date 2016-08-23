@@ -11,12 +11,12 @@
     <input  type="hidden" value="@Session["username"]" name="Username" />
     <table class="entryContainerBox">
         <tr>
-            <td>CollectedDate:</td>
+            <td>Collection Date:</td>
             <td>@Html.EditorFor(model => model.CollectedDate, new { id = "CollectedDate" })</td>
         </tr>
 
         <tr>
-            <td>CollectorName:</td>
+            <td>Collector Name:</td>
             <td>@Html.EditorFor(model => model.CollectorName, new { id = "CollectorName" })</td>
         </tr>
             
@@ -38,7 +38,7 @@
         </tr>
 
         <tr>
-            <td>LocationDesc:</td>
+            <td>Location Description:</td>
             <td>@Html.TextAreaFor(model => model.LocationDesc, new { id = "LocationDesc" })</td>
         </tr>
             
@@ -58,21 +58,20 @@
         </tr>
 
         <tr>
-            <td>SoilColor:</td>
+            <td>Soil Color:</td>
             <td>
                 <select name="SoilColor" id="SoilColor">
                     <option value="red">Red</option>
                     <option value="light brown">Light Brown</option>
                     <option value="brown">Brown</option>
                     <option value="dark brown">Dark Brown</option>
-                    <option value="grey">Grey</option>
-                    <option value="green">Green</option>
+                    <option value="gray">Gray</option>
                 </select>
             </td>
         </tr>
 
         <tr>
-            <td>SoilType:</td>
+            <td>Soil Type:</td>
             <td>
                 <select name="SoilType" id="SoilType">
                     <option value="clay">Clay</option>
@@ -84,10 +83,11 @@
         </tr>
 
         <tr>
-            <td>SoilMoisture:</td>
+            <td>Soil Moisture:</td>
             <td>
                 <select name="SoilMoisture" id="SoilMoisture">
                     <option value="wet">Wet</option>
+                    <option value="moist">Moist</option>
                     <option value="dry">Dry</option>
                 </select>
             </td>
@@ -112,7 +112,7 @@
         
 
         <tr>
-            <td>AcquisitionNo:</td>
+            <td>Acquisition No:</td>
             <td>@Html.EditorFor(model => model.AcquisitionNo, new { id = "AcquisitionNo" })</td>
         </tr>
         <tr>
@@ -136,7 +136,7 @@
             <td>@Html.EditorFor(model => model.Species, new { id = "Species" })</td>
         </tr>
         <tr>
-            <td>SubSpecies:</td>
+            <td>Sub-Species:</td>
             <td>@Html.EditorFor(model => model.SubSpecies, new { id = "SubSpecies" })</td>
         </tr>
         <tr>
@@ -144,12 +144,12 @@
             <td>@Html.EditorFor(model => model.Author, new { id = "Author" })</td>
         </tr>
         <tr>
-            <td>SubAuthor:</td>
+            <td>Sub-Author:</td>
             <td>@Html.EditorFor(model => model.SubAuthor, new { id = "SubAuthor" })</td>
         </tr>
 
         <tr>
-            <td>CollectorNo:</td>
+            <td>Collector No:</td>
             <td>@Html.EditorFor(model => model.CollectorNo, new { id = "CollectorNo" })</td>
         </tr>
         <tr>
