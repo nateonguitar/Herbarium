@@ -30,14 +30,20 @@
             /* Avery 5160 labels -- CSS and HTML by MM at Boulder Information Services */
 
             width: 3.5in;/* plus .6 inches from padding */
-            height: 2.4in;/* plus .125 inches from padding */
+            height: 2.5in;/* plus .125 inches from padding */
             padding: .15in .3in 0;
-            margin:0.025in 0.03in;
+            margin:0.01in 0.01in;
             float: left;
             text-align: left;
-            overflow: hidden;
-            background:url("~/../../Content/themes/print-border.png");
-            background-size:100% 100%;
+            overflow: visible;
+        }
+
+        .borderImage{
+            width:3.8in;
+            height:2.5in;
+            margin-top:-2in;
+            margin-left:-0.15in;
+            padding:0;
         }
 
             .labelHeader{
@@ -83,6 +89,8 @@
                 @Html.DisplayFor(model => model.Community) - Soil: @Html.DisplayFor(model => model.SoilColor), @Html.DisplayFor(model => model.SoilType), @Html.DisplayFor(model => model.SoilMoisture)<br />
 
                 <p><span style="margin-right:0.1in">@Html.DisplayFor(model => model.CollectorName)  @Html.DisplayFor(model => model.CollectorNo)</span>  @Html.DisplayFor(model => model.CollectedDate)</p>
+                <img class="borderImage" src="../../Content/themes/print-border.png" style="display:inline;" />
+                
                 
                 
 
